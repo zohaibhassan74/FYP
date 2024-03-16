@@ -3,14 +3,15 @@ import {
   activateUser,
   // deleteUser,
   // getAllUsers,
-  // getUserInfo,
+  getUserInfo,
   loginUser,
   logoutUser,
   registrationUser,
-  // socialAuth,
-  // updatePassword,
-  // updateProfilePicture,
-  // updateUserInfo,
+  updateAccessToken,
+  socialAuth,
+  updatePassword,
+  updateProfilePicture,
+  updateUserInfo,
   // updateUserRole,
 } from "../controllers/user.controller";
 import { authorizeRoles, isAutheticated } from "../middleware/auth";
@@ -24,15 +25,17 @@ userRouter.post("/login", loginUser);
 
 userRouter.get("/logout",isAutheticated, logoutUser);
 
-// userRouter.get("/me", isAutheticated, getUserInfo);
+userRouter.get("/refresh",isAutheticated, updateAccessToken)
 
-// userRouter.post("/social-auth", socialAuth);
+userRouter.get("/me", isAutheticated, getUserInfo);
 
-// userRouter.put("/update-user-info",isAutheticated, updateUserInfo);
+userRouter.post("/social-auth", socialAuth);
 
-// userRouter.put("/update-user-password", isAutheticated, updatePassword);
+userRouter.put("/update-user-info",isAutheticated, updateUserInfo);
 
-// userRouter.put("/update-user-avatar", isAutheticated, updateProfilePicture);
+userRouter.put("/update-user-password", isAutheticated, updatePassword);
+
+userRouter.put("/update-user-avatar", isAutheticated, updateProfilePicture);
 
 // userRouter.get(
 //   "/get-users",
