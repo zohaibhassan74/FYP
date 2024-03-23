@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 import path from "path";
 import ejs from "ejs";
 import sendMail from "../utils/sendMail";
-// import NotificationModel from "../models/notification.Model";
+import NotificationModel from "../models/notification.Model";
 // import axios from "axios";
 
 export const uploadCourse = CatchAsyncError(
@@ -145,7 +145,6 @@ export const getCourseByUser = CatchAsyncError(
   }
 );
 
-// // add question in course
 interface IAddQuestionData {
   question: string;
   courseId: string;
@@ -170,23 +169,20 @@ export const addQuestion = CatchAsyncError(
         return next(new ErrorHandler("Invalid content id", 400));
       }
 
-      // create a new question object
       const newQuestion: any = {
         user: req.user,
         question,
         questionReplies: [],
       };
 
-      // add this question to our course content
       couseContent.questions.push(newQuestion);
 
-      // await NotificationModel.create({
-      //   user: req.user?._id,
-      //   title: "New Question Received",
-      //   message: `You have a new question in ${couseContent.title}`,
-      // });
+      await NotificationModel.create({
+        user: req.user?._id,
+        title: "New Question Received",
+        message: `You have a new question in ${couseContent.title}`,
+      });
 
-      // save the updated course
       await course?.save();
 
       res.status(200).json({
@@ -199,7 +195,6 @@ export const addQuestion = CatchAsyncError(
   }
 );
 
-// // add answer in course question
 interface IAddAnswerData {
   answer: string;
   courseId: string;
@@ -288,7 +283,7 @@ export const addAnwser = CatchAsyncError(
   }
 );
 
-// // add review in course
+
 interface IAddReviewData {
   review: string;
   rating: number;
@@ -337,12 +332,11 @@ export const addReview = CatchAsyncError(
 
       await course?.save();
 
-      // create notification
-      // await NotificationModel.create({
-      //   user: req.user?._id,
-      //   title: "New Review Received",
-      //   message: `${req.user?.name} has given a review in ${course?.name}`,
-      // });
+      await NotificationModel.create({
+        user: req.user?._id,
+        title: "New Review Received",
+        message: `${req.user?.name} has given a review in ${course?.name}`,
+      });
 
       res.status(200).json({
         success: true,
@@ -403,42 +397,39 @@ export const addReplyToReview = CatchAsyncError(
   }
 );
 
-// // get all courses --- only for admin
-// export const getAdminAllCourses = CatchAsyncError(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       getAllCoursesService(res);
-//     } catch (error: any) {
-//       return next(new ErrorHandler(error.message, 400));
-//     }
-//   }
-// );
 
-// // Delete Course --- only for admin
-// export const deleteCourse = CatchAsyncError(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const { id } = req.params;
+export const getAdminAllCourses = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllCoursesService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
 
-//       const course = await CourseModel.findById(id);
+export const deleteCourse = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
 
-//       if (!course) {
-//         return next(new ErrorHandler("course not found", 404));
-//       }
+      const course = await CourseModel.findById(id);
 
-//       await course.deleteOne({ id });
+      if (!course) {
+        return next(new ErrorHandler("course not found", 404));
+      }
 
-//       await redis.del(id);
+      await course.deleteOne({ id });
 
-//       res.status(200).json({
-//         success: true,
-//         message: "course deleted successfully",
-//       });
-//     } catch (error: any) {
-//       return next(new ErrorHandler(error.message, 400));
-//     }
-//   }
-// );
+      res.status(200).json({
+        success: true,
+        message: "course deleted successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
 
 // // generate video url
 // export const generateVideoUrl = CatchAsyncError(
