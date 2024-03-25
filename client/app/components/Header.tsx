@@ -9,10 +9,11 @@ import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
 import Image from "next/image";
-// import avatar from "../../public/assests/avatar.png";
-// import { useSession } from "next-auth/react";
-// import { useLogOutQuery, useSocialAuthMutation } from "@/redux/features/auth/authApi";
-// import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import avatar from "../../public/assests/avatar.png";
+import { useSession } from "next-auth/react";
+import { useLogOutQuery, useSocialAuthMutation } from "@/redux/features/auth/authApi";
+import { toast } from "react-hot-toast";
 // import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 // import Loader from "./Loader/Loader";
 
@@ -27,36 +28,35 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
+  const {user} = useSelector((state: any) => state.auth);
   // const {data:userData,isLoading,refetch} = useLoadUserQuery(undefined,{});
-  // const { data } = useSession();
-  // const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+  const { data } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
   // const [logout, setLogout] = useState(false);
   // const {} = useLogOutQuery(undefined, {
   //   skip: !logout ? true : false,
   // });
 
-  // useEffect(() => {
-  //   if(!isLoading){
-  //     if (!userData) {
-  //       if (data) {
-  //         socialAuth({
-  //           email: data?.user?.email,
-  //           name: data?.user?.name,
-  //           avatar: data.user?.image,
-  //         });
-  //         refetch();
-  //       }
-  //     }
-  //     if(data === null){
-  //       if(isSuccess){
-  //         toast.success("Login Successfully");
-  //       }
-  //     }
-  //     if(data === null && !isLoading && !userData){
-  //         setLogout(true);
-  //     }
-  //   }
-  // }, [data, userData,isLoading]);
+  useEffect(() => {
+    
+      if (!user) {
+        if (data) {
+          socialAuth({
+            email: data?.user?.email,
+            name: data?.user?.name,
+            avatar: data.user?.image,
+          });
+        }
+      }
+      if(data === null){
+        if(isSuccess){
+          toast.success("Login Successfully");
+        }
+      }
+      // if(data === null && !isLoading && !userData){
+      //     setLogout(true);
+      // }
+    }, [data, user]);
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -111,10 +111,10 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   onClick={() => setOpenSidebar(true)}
                 />
               </div>
-              {/* {userData ? ( */}
+              {user ? (
                 <Link href={"/profile"}>
                   <Image
-                    src={require("../../public/assests/avatar.png")}
+                    src={user.avatar ? user.avatar.url : avatar}
                     alt=""
                     width={30}
                     height={30}
@@ -122,13 +122,13 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                     style={{border: activeItem === 5 ? "2px solid #37a39a" : "none"}}
                   />
                 </Link>
-              {/* ) : ( */}
+              ) : (
                 <HiOutlineUserCircle
                   size={25}
                   className="hidden 800px:block cursor-pointer dark:text-white text-black"
                   onClick={() => setOpen(true)}
                 />
-              {/* )} */}
+              )}
             </div>
           </div>
         </div>
@@ -178,7 +178,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               setRoute={setRoute}
               activeItem={activeItem}
               component={Login}
-              // refetch={refetch}
             />
           )}
         </>

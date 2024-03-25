@@ -1,7 +1,12 @@
+'use client'
 import type { Metadata } from "next";
 import { Poppins, Josefin_Sans } from "next/font/google";
 import { ThemeProvider } from "./utils/theme-provider";
 import { Providers } from "./Provider";
+import { SessionProvider } from "next-auth/react";
+import Loader from "./components/Loader/Loader";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import React, { FC, useEffect } from "react";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
@@ -28,12 +33,32 @@ export default function RootLayout({
         className={`${poppins.variable} ${josefin.variable} !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}
       >
         <Providers>
+          <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="sytem">
-            {children}
+            <Custom>
+              <div>
+              {children}
+              </div>
+            </Custom>
             <Toaster position="top-center" reverseOrder={false} />
           </ThemeProvider>
+          </SessionProvider>
         </Providers>
       </body>
     </html>
   );
 }
+
+
+
+const Custom: FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isLoading } = useLoadUserQuery({});
+
+  return <div>
+    {isLoading ? <Loader /> : 
+    <div>
+      {children}
+    </div>
+    }
+    </div>;
+};
