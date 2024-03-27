@@ -1,6 +1,10 @@
 "use client";
 import React, { FC, useState } from "react";
 import SideBarProfile from "./SideBarProfile";
+import {signOut} from "next-auth/react";
+import { useLogOutQuery } from "@/redux/features/auth/authApi";
+import ProfileInfo from "./ProfileInfo";
+import ChangePassword from "./ChangePassword";
 
 type Props = {
   user: any;
@@ -10,9 +14,14 @@ const Profile: FC<Props> = ({ user }) => {
   const [scroll, setScroll] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [active, setActive] = useState(1);
+  const [logOut, setlogOut] = useState(false)
+  const {} = useLogOutQuery(undefined, {
+    skip: !logOut ? true : false,
+  })
+
   const logouthandler = async () => {
-    // dispatch(logout());
-    // router.push("/");
+    setlogOut(true)
+    await signOut();
   };
 
   if (typeof window !== "undefined") {
@@ -38,6 +47,16 @@ const Profile: FC<Props> = ({ user }) => {
           logouthandler={logouthandler}
         />
       </div>
+        {
+          active === 1 && (
+            <ProfileInfo avatar={avatar} user={user} />
+          )
+        }
+               {
+          active === 2 && (
+            <ChangePassword />
+          )
+        }
     </div>
   );
 };
