@@ -84,7 +84,7 @@ const CourseInformation: FC<Props> = ({
               setCourseInfo({ ...courseInfo, name: e.target.value })
             }
             id="name"
-            placeholder="MERN stack LMS platform with next 13"
+            placeholder="MERN stack LMS platform"
             className={`
             ${styles.input}`}
           />

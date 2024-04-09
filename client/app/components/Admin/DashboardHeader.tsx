@@ -34,17 +34,17 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
     audio.play();
   };
 
-  useEffect(() => {
-    if (data) {
-      setNotifications(
-        data.notifications.filter((item: any) => item.status === "unread")
-      );
-    }
-    if (isSuccess) {
-      refetch();
-    }
-    audio.load();
-  }, [data, isSuccess,audio]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setNotifications(
+  //       data.notifications.filter((item: any) => item.status === "unread")
+  //     );
+  //   }
+  //   if (isSuccess) {
+  //     refetch();
+  //   }
+  //   audio.load();
+  // }, [data, isSuccess,audio]);
 
   // useEffect(() => {
   //   socketId.on("newNotification", (data) => {
@@ -53,9 +53,9 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
   //   });
   // }, []);
 
-  const handleNotificationStatusChange = async (id: string) => {
-    await updateNotificationStatus(id);
-  };
+  // const handleNotificationStatusChange = async (id: string) => {
+  //   await updateNotificationStatus(id);
+  // };
 
   return (
     <div className="w-full flex items-center justify-end p-6 fixed top-5 right-0 z-[9999999]">
@@ -84,7 +84,7 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
                   <p className="text-black dark:text-white">{item.title}</p>
                   <p
                     className="text-black dark:text-white cursor-pointer"
-                    onClick={() => handleNotificationStatusChange(item._id)}
+                    // onClick={() => handleNotificationStatusChange(item._id)}
                   >
                     Mark as read
                   </p>
@@ -93,7 +93,7 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
                   {item.message}
                 </p>
                 <p className="p-2 text-black dark:text-white text-[14px]">
-                  {/* {format(item.createdAt)} */}
+                  5 days Ago
                 </p>
               </div>
             ))}
