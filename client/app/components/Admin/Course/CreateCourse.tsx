@@ -106,6 +106,7 @@ const CreateCourse = (props: Props) => {
       courseData: formattedCourseContentData,
     };
     setCourseData(data);
+    console.log(data)
   };
 
   const handleCourseCreate = async (e: any) => {
