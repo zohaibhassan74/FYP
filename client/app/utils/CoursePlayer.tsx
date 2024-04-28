@@ -6,6 +6,13 @@ type Props = {
   title: string;
 };
 
+const myStyles = {
+  border: '0',
+  height: '360px',
+  width: '640px',
+  maxWidth: '100%',
+};
+
 const CoursePlayer: FC<Props> = ({ videoUrl }) => {
   const [videoData, setVideoData] = useState({
     otp: "",
@@ -23,18 +30,13 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
   }, [videoUrl]);
 
   return (
-    <div style={{position:"relative",paddingTop:"56.25%",overflow:"hidden"}}>
+    <div
+      style={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}
+    >
       {videoData.otp && videoData.playbackInfo !== "" && (
         <iframe
-          src={`https://player.vdocipher.com/v2/?otp=${videoData?.otp}&playbackInfo=${videoData.playbackInfo}&player=Ub9OiZXIOeUXH0Nv`}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            border: 0
-          }}
+          src="https://player.vdocipher.com/v2/?otp=20160313versASE32350s2n6HiRSuUALwbLrdvsnAhTisVOT4D3FwUpfSdd3KOrN&playbackInfo=eyJ2aWRlb0lkIjoiNmVkODY1MmYzZmI3NzI4ZDAzYTg1NzkwY2EwNTg4MTIifQ=="
+          style={myStyles}
           allowFullScreen={true}
           allow="encrypted-media"
         ></iframe>
@@ -44,3 +46,9 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
 };
 
 export default CoursePlayer;
+
+{
+  /* <div style="padding-top:41%;position:relative;">
+<iframe src="https://player.vdocipher.com/v2/?otp=20160313versASE323qSba2cKMM0hixwBJpBD3R7AjNYrcwtRHnLfGB4bR6l0YFV&playbackInfo=eyJ2aWRlb0lkIjoiNmVkODY1MmYzZmI3NzI4ZDAzYTg1NzkwY2EwNTg4MTIifQ==" style="border:0;max-width:100%;position:absolute;top:0;left:0;height:100%;width:100%;" allowFullScreen="true" allow="encrypted-media"></iframe>
+</div>  */
+}

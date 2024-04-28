@@ -18,6 +18,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.24",
     "@types/nodemailer": "^6.4.14",
+    "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.0.3",
     "cloudinary-core": "^2.13.0",
