@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 require("dotenv").config()
 
-const dbUrl:string = process.env.MONGODB_URI || '';
+const MONGODB_URI="mongodb://0.0.0.0:27017/Lms"
+
+const dbUrl:string = `${MONGODB_URI}`;
 
 const connectDB = async () => {
     try {
