@@ -22,6 +22,7 @@ const EditFaq = (props: Props) => {
 
   useEffect(() => {
     if (data) {
+      console.log("FAQ",data.layout.faq)
       setQuestions(data.layout.faq);
     }
     if(layoutSuccess){
