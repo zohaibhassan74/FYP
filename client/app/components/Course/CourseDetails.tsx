@@ -6,24 +6,24 @@ import React, { useEffect, useState } from "react";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 import { format } from "timeago.js";
 import CourseContentList from "../Course/CourseContentList";
-import { Elements } from "@stripe/react-stripe-js";
-import CheckOutForm from "../Payment/CheckOutForm";
+// import { Elements } from "@stripe/react-stripe-js";
+// import CheckOutForm from "../Payment/CheckOutForm";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import Image from "next/image";
 import { VscVerifiedFilled } from "react-icons/vsc";
 
 type Props = {
   data: any;
-  stripePromise: any;
-  clientSecret: string;
+  // stripePromise: any;
+  // clientSecret: string;
   setRoute: any;
   setOpen: any;
 };
 
 const CourseDetails = ({
   data,
-  stripePromise,
-  clientSecret,
+  // stripePromise,
+  // clientSecret,
   setRoute,
   setOpen: openAuthModal,
 }: Props) => {
@@ -36,7 +36,7 @@ const CourseDetails = ({
   }, [userData]);
 
   const dicountPercentenge =
-    ((data?.estimatedPrice - data.price) / data?.estimatedPrice) * 100;
+    ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
 
   const discountPercentengePrice = dicountPercentenge.toFixed(0);
 
@@ -58,17 +58,17 @@ const CourseDetails = ({
         <div className="w-full flex flex-col-reverse 800px:flex-row">
           <div className="w-full 800px:w-[65%] 800px:pr-5">
             <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-              {data.name}
+              {data?.name}
             </h1>
             <div className="flex items-center justify-between pt-3">
               <div className="flex items-center">
-                <Ratings rating={data.ratings} />
+                <Ratings rating={data?.ratings} />
                 <h5 className="text-black dark:text-white">
-                  {data.reviews?.length} Reviews
+                  {data?.reviews?.length} Reviews
                 </h5>
               </div>
               <h5 className="text-black dark:text-white">
-                {data.purchased} Students
+                {data?.purchased} Students
               </h5>
             </div>
 
@@ -77,7 +77,7 @@ const CourseDetails = ({
               What you will learn from this course?
             </h1>
             <div>
-              {data.benefits?.map((item: any, index: number) => (
+              {data?.benefits?.map((item: any, index: number) => (
                 <div
                   className="w-full flex 800px:items-center py-2"
                   key={index}
@@ -99,7 +99,7 @@ const CourseDetails = ({
             <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
               What are the prerequisites for starting this course?
             </h1>
-            {data.prerequisites?.map((item: any, index: number) => (
+            {data?.prerequisites?.map((item: any, index: number) => (
               <div className="w-full flex 800px:items-center py-2" key={index}>
                 <div className="w-[15px] mr-1">
                   <IoCheckmarkDoneOutline
@@ -126,7 +126,7 @@ const CourseDetails = ({
                 Course Details
               </h1>
               <p className="text-[18px] mt-[20px] whitespace-pre-line w-full overflow-hidden text-black dark:text-white">
-                {data.description}
+                {data?.description}
               </p>
             </div>
             <br />
@@ -143,7 +143,7 @@ const CourseDetails = ({
                 </h5>
               </div>
               <br />
-              {(data?.reviews && [...data.reviews].reverse()).map(
+              {(data?.reviews && [...data.reviews].reverse())?.map(
                 (item: any, index: number) => (
                   <div className="w-full pb-4" key={index}>
                     <div className="flex">
@@ -218,10 +218,10 @@ const CourseDetails = ({
               <CoursePlayer videoUrl={data?.demoUrl} title={data?.title} />
               <div className="flex items-center">
                 <h1 className="pt-5 text-[25px] text-black dark:text-white">
-                  {data.price === 0 ? "Free" : data.price + "$"}
+                  {data?.price === 0 ? "Free" : data?.price + "$"}
                 </h1>
                 <h5 className="pl-3 text-[20px] mt-2 line-through opacity-80 text-black dark:text-white">
-                  {data.estimatedPrice}$
+                  {data?.estimatedPrice}$
                 </h5>
 
                 <h4 className="pl-5 pt-4 text-[22px] text-black dark:text-white">
@@ -229,10 +229,16 @@ const CourseDetails = ({
                 </h4>
               </div>
               <div className="flex items-center">
-                {isPurchased ? (
+              <Link
+                    className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
+                    href={`/course-access/${data?._id}`}
+                  >
+                    Enter to Course
+                  </Link>
+                {/* {isPurchased ? (
                   <Link
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
-                    href={`/course-access/${data._id}`}
+                    href={`/course-access/${data?._id}`}
                   >
                     Enter to Course
                   </Link>
@@ -243,7 +249,7 @@ const CourseDetails = ({
                   >
                     Buy Now {data.price}$
                   </div>
-                )}
+                )} */}
               </div>
               <br />
               <p className="pb-1 text-black dark:text-white">
@@ -274,11 +280,11 @@ const CourseDetails = ({
                 />
               </div>
               <div className="w-full">
-                {stripePromise && clientSecret && (
+                {/* {stripePromise && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
                     <CheckOutForm setOpen={setOpen} data={data} user={user} refetch={refetch} />
                   </Elements>
-                )}
+                )} */}
               </div>
             </div>
           </div>

@@ -27,11 +27,11 @@ const CourseContent = ({ id,user }: Props) => {
         <>
           <Header activeItem={1} open={open} setOpen={setOpen} route={route} setRoute={setRoute} />
           <div className="w-full grid 800px:grid-cols-10">
-            <Heading
+            {/* <Heading
               title={data[activeVideo]?.title}
               description="anything"
               keywords={data[activeVideo]?.tags}
-            />
+            /> */}
             <div className="col-span-7">
               <CourseContentMedia
                 data={data}
@@ -57,3 +57,4 @@ const CourseContent = ({ id,user }: Props) => {
 };
 
 export default CourseContent;
+

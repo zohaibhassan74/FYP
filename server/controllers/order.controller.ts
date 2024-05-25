@@ -120,13 +120,13 @@ export const getAllOrders = CatchAsyncError(
 );
 
 // //  send stripe publishble key
-// export const sendStripePublishableKey = CatchAsyncError(
-//   async (req: Request, res: Response) => {
-//     res.status(200).json({
-//       publishablekey: process.env.STRIPE_PUBLISHABLE_KEY,
-//     });
-//   }
-// );
+export const sendStripePublishableKey = CatchAsyncError(
+  async (req: Request, res: Response) => {
+    res.status(200).json({
+      publishablekey: process.env.STRIPE_PUBLISHABLE_KEY,
+    });
+  }
+);
 
 // // new payment
 // export const newPayment = CatchAsyncError(
