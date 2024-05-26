@@ -106,11 +106,11 @@ const CourseContentMedia = ({
     if (isSuccess) {
       setQuestion("");
       refetch();
-      socketId.emit("notification", {
-        title: `New Question Received`,
-        message: `You have a new question in ${data[activeVideo].title}`,
-        userId: user._id,
-      });
+      // socketId.emit("notification", {
+      //   title: `New Question Received`,
+      //   message: `You have a new question in ${data[activeVideo].title}`,
+      //   userId: user?._id,
+      // });
     }
     if (answerSuccess) {
       setAnswer("");
@@ -132,7 +132,7 @@ const CourseContentMedia = ({
     if (answerError) {
       if ("data" in answerError) {
         const errorMessage = error as any;
-        toast.error(errorMessage.data.message);
+        toast.error(errorMessage.data?.message);
       }
     }
     if (reviewSuccess) {
@@ -198,12 +198,16 @@ const CourseContentMedia = ({
       }
     }
   };
+   
+  const activeContent = data[activeVideo] || {};
 
   return (
     <div className="w-[95%] 800px:w-[86%] py-4 m-auto">
       <CoursePlayer
-        title={data[activeVideo]?.title}
-        videoUrl={data[activeVideo]?.videoUrl}
+        // title={data[activeVideo]?.title}
+        // videoUrl={data[activeVideo]?.videoUrl}
+        title={activeContent?.title || "No Title Available"}
+        videoUrl={activeContent?.videoUrl || ""}
       />
       <div className="w-full flex items-center justify-between my-3">
         <div
@@ -286,7 +290,7 @@ const CourseContentMedia = ({
           <div className="flex w-full">
             <Image
               src={
-                user.avatar
+                user?.avatar
                   ? user.avatar.url
                   : "https://res.cloudinary.com/dshp9jnuy/image/upload/v1665822253/avatars/nrxsg8sd9iy10bbsoenn.png"
               }
